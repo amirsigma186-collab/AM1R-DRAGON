@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" data-theme="dark">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>وبسایت شخصی AM1R-DRAGON</title>
+<meta name="theme-color" content="#0d0d0f" />
+<style>
+/* ===== THEME (Dark/Light) ===== */
+:root{
+  --bg:#0d0d0f; --bg-2:#141419; --card:#151519; --ring:#24242c;
+  --text:#e8eaed; --muted:#a7adb5; --acc:#f5c044; --danger:#ff4d4f; --link:#7bdcff;
+}
+:root[data-theme="light"]{
+  --bg:#fafafa; --bg-2:#ffffff; --card:#ffffff; --ring:#e6e6e6;
+  --text:#0f1115; --muted:#4b5563; --acc:#eab308; --danger:#e11d48; --link:#0369a1;
+}
+
+/* ===== RESET & TYPO ===== */
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  font-family:Tahoma,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+  line-height:1.9; font-size:18px; font-weight:600; /* برجسته و بزرگ */
+}
+/* جلوگیری از کپی سراسری */
+body{ user-select:none; -webkit-user-select:none; }
+#about{ user-select:text; -webkit-user-select:text; } /* فقط معرفی من قابل کپی */
+a{color:var(--link); text-decoration:none}
+h1,h2,h3{margin:0 0 12px 0; font-weight:800}
+h2{font-size:24px}
+
+/* ===== LAYOUT ===== */
+.topbar{
+  position:sticky; top:0; z-index:1000;
+  background:rgba(10,10,12,.85); backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--ring);
+}
+[data-theme="light"] .topbar{ background:rgba(255,255,255,.8); }
+.nav{
+  max-width:1200px; margin:auto; padding:10px 16px;
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+}
+.brand{display:flex; align-items:center; gap:10px}
+.logo{
+  width:32px; height:32px; border-radius:8px; background:linear-gradient(135deg,#1a1a22,#000);
+  border:1px solid #333; display:grid; place-items:center; color:var(--acc); font-weight:900; font-size:13px;
+}
+.brand .sub{font-size:12px; color:var(--muted)}
+.btn{border:0; cursor:pointer; padding:8px 12px; border-radius:12px; font-weight:800}
+.btn-ghost{background:#1b1b22; color:var(--text); border:1px solid var(--ring)}
+.btn-primary{background:var(--acc); color:#000}
+.btn-danger{background:var(--danger); color:#fff}
+[data-theme="light"] .btn-ghost{background:#f3f4f6; color:#111827}
+.menu-toggle{font-size:22px; cursor:pointer; user-select:none; padding:6px 10px; border-radius:10px; background:#1b1b22; border:1px solid var(--ring)}
+[data-theme="light"] .menu-toggle{background:#f3f4f6}
+
+.menu{
+  position:absolute; right:16px; top:58px; width:260px; display:none; flex-direction:column; overflow:hidden;
+  background:var(--bg-2); border:1px solid var(--ring); border-radius:16px; box-shadow:0 10px 30px rgba(0,0,0,.25);
+}
+.menu a{padding:12px 14px; border-bottom:1px solid var(--ring); color:var(--text)}
+.menu a:hover{background:#1b1b22}
+[data-theme="light"] .menu a:hover{background:#f3f4f6}
+
+main{max-width:1200px; margin:24px auto; padding:0 16px}
+section{margin:22px 0}
+.card{
+  background:linear-gradient(180deg,var(--bg-2),var(--card));
+  border:1px solid var(--ring); border-radius:18px; padding:18px;
+  box-shadow:0 10px 30px rgba(0,0,0,.2);
+}
+.grid{display:grid; gap:12px}
+.g-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media (max-width:900px){ .g-3{grid-template-columns:1fr 1fr} }
+@media (max-width:640px){ .g-2,.g-3{grid-template-columns:1fr} }
+.chip{padding:6px 10px; border-radius:999px; background:#1b1b22; font-size:12px; color:var(--muted); border:1px solid var(--ring)}
+.inp, textarea, select{
+  width:100%; padding:10px 12px; border-radius:12px; border:1px solid var(--ring);
+  background:#0f0f13; color:var(--text); outline:none; font-weight:700
+}
+[data-theme="light"] .inp, [data-theme="light"] textarea, [data-theme="light"] select{ background:#fff; color:#0f1115 }
+textarea{min-height:100px; resize:vertical}
+footer{padding:22px; text-align:center; color:var(--muted); border-top:1px solid var(--ring); margin-top:28px}
+.hint{font-size:12px; color:var(--muted)}
+
+/* ===== PROFILE ===== */
+.profile-wrap{display:grid; place-items:center; gap:12px}
+.profile-img{
+  width:180px; height:180px; border-radius:50%; object-fit:cover;
+  border:4px solid var(--acc); box-shadow:0 8px 24px rgba(245,192,68,.25); background:#000;
+}
+.carousel-ctrls{display:flex; gap:8px; align-items:center}
+
+/* ===== GALLERY ===== */
+.gallery{display:grid; gap:12px}
+.gallery .item{position:relative}
+.gallery img{width:100%; border-radius:14px; border:1px solid var(--ring); background:#000; transition:transform .25s}
+.gallery img:hover{transform:translateY(-4px)}
+.gallery .cap{position:absolute; inset:auto 8px 8px 8px; background:rgba(0,0,0,.55); padding:6px 10px; border-radius:10px; font-size:12px}
+
+/* ===== BLOG ===== */
+.post{background:#101015; border:1px solid var(--ring); border-radius:14px; padding:12px}
+.post .meta{font-size:12px; color:var(--muted)}
+
+/* ===== SHOP ===== */
+.product{display:flex; justify-content:space-between; align-items:center;
+         padding:12px; border-radius:14px; background:#101015; border:1px solid var(--ring)}
+.price{font-weight:900; color:var(--acc)}
+
+/* ===== CONTACT ===== */
+.actions{display:grid; gap:10px; grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.action{display:flex; align-items:center; justify-content:center; gap:10px;
+        background:#101015; border:1px solid var(--ring); border-radius:14px; padding:12px; font-weight:800}
+
+/* ===== COMMENTS ===== */
+.c-list{display:grid; gap:10px}
+.comment{background:#101015; border:1px solid var(--ring); border-radius:14px; padding:12px}
+.c-meta{display:flex; justify-content:space-between; align-items:center; font-size:12px; color:var(--muted)}
+.c-actions{display:flex; gap:8px}
+.badge{display:inline-flex; align-items:center; gap:6px; padding:6px 10px; border-radius:999px; background:#1b1b22; border:1px solid var(--ring)}
+
+/* ===== RATE (5) ===== */
+.stars{display:flex; gap:6px; font-size:28px; cursor:pointer}
+.stars .on{color:var(--acc)}
+
+/* ===== LEADERBOARD ===== */
+.board .row{display:flex; justify-content:space-between; padding:10px; border-bottom:1px dashed #262630}
+
+/* ===== MODAL ===== */
+.modal{
+  position:fixed; inset:0; display:none; place-items:center; background:rgba(0,0,0,.55);
+  z-index:2000; padding:16px;
+}
+.modal .panel{
+  width:min(560px,100%); background:var(--bg-2); border:1px solid var(--ring); border-radius:18px; padding:18px;
+}
+
+/* ===== SECRET ACCESS (hidden dash) ===== */
+.secret{
+  display:none;
+}
+.lock-mini{
+  position:fixed; left:10px; bottom:12px; z-index:1200;
+  opacity:.6; cursor:pointer; font-size:12px; padding:6px 10px; border-radius:999px;
+  background:#1b1b22; border:1px solid var(--ring);
+}
+.lock-mini:hover{opacity:1}
+</style>
+</head>
+<body>
+
+<!-- ===== Header ===== -->
+<div class="topbar">
+  <div class="nav">
+    <div class="brand">
+      <div class="logo">AD</div>
+      <div>
+        <div>وبسایت شخصی <b>AM1R-DRAGON</b></div>
+        <div class="sub" id="welcomeLine">خوش اومدی!</div>
+      </div>
+    </div>
+    <div class="auth" style="display:flex;align-items:center;gap:8px">
+      <button class="btn btn-ghost" id="themeBtn" title="حالت روز/شب">🌙</button>
+      <span id="whoami" class="sub"></span>
+      <button class="btn btn-ghost" id="btnLogin" onclick="openAuth()">ورود / ثبت‌نام</button>
+      <button class="btn btn-danger" id="btnLogout" style="display:none" onclick="logout()">خروج</button>
+      <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+    </div>
+  </div>
+  <div class="menu" id="menu">
+    <a href="#home">خانه</a>
+    <a href="#profile">پروفایل</a>
+    <a href="#about">معرفی من</a>
+    <a href="#gallery">گالری</a>
+    <a href="#blog">بلاگ</a>
+    <a href="#shop">فروشگاه</a>
+    <a href="#comments">نظرات</a>
+    <a href="#rules">قوانین</a>
+    <a href="#contact">ارتباط با من</a>
+    <a href="#rate">امتیاز</a>
+    <a href="#board">کاربران فعال</a>
+    <!-- صفحه آمار عمداً در منو نیست -->
+  </div>
+</div>
+
+<main>
+  <!-- ===== Home (بدون متن اضافی) ===== -->
+  <section id="home" class="card">
+    <h2>AM1R-DRAGON — Welcome</h2>
+  </section>
+
+  <!-- ===== Profile + User Panel ===== -->
+  <section id="profile" class="card">
+    <h2>پروفایل</h2>
+    <div class="profile-wrap">
+      <img id="profilePic" class="profile-img"
+           src="https://i.ibb.co/jGspv3J/photo-2025-02-22-19-12-32.jpg"
+           alt="پروفایل AM1R-DRAGON" />
+      <div class="carousel-ctrls" style="gap:12px;flex-wrap:wrap;justify-content:center">
+        <span class="chip" id="userDisplay">کاربر مهمان</span>
+        <label class="btn btn-ghost" for="fileAvatar">تغییر عکس</label>
+        <input id="fileAvatar" type="file" accept="image/*" style="display:none" />
+        <button class="btn btn-primary" onclick="openUserPanel()">ویرایش اطلاعات</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== About (تنها بخش قابل کپی) ===== -->
+  <section id="about" class="card">
+    <h2>معرفی من</h2>
+    <p>
+      سلام! من امیر هستم، ولی توی فضای مجازی بیشتر با اسم <b>امیر دراگون</b> منو می‌شناسن.
+      ۱۸ سالمه و تهران زندگی می‌کنم. استایلم بیشتر سمت کلاسیکه و عاشق رنگ مشکی‌ام.
+      سرگرمی‌هام؟ دیدن انیمه، گیم زدن و ورزش کردن 👾⚡️
+      البته بیشتر وقت‌هام سر کار می‌گذره، ولی سعی می‌کنم همیشه برای چیزایی که دوست دارم وقت بذارم.
+    </p>
+  </section>
+
+  <!-- ===== Gallery (Historic Iran) ===== -->
+  <section id="gallery" class="card">
+    <h2>گالری — مکان‌های تاریخی ایران</h2>
+    <div class="gallery g-3">
+      <figure class="item">
+        <img src="https://placehold.co/800x540?text=Persepolis+%28Takht-e+Jamshid%29" alt="تخت جمشید">
+        <figcaption class="cap">تخت جمشید — شیراز</figcaption>
+      </figure>
+      <figure class="item">
+        <img src="https://placehold.co/800x540?text=Naqsh-e+Jahan+Square" alt="میدان نقش جهان">
+        <figcaption class="cap">میدان نقش جهان — اصفهان</figcaption>
+      </figure>
+      <figure class="item">
+        <img src="https://placehold.co/800x540?text=Nasir+al-Mulk+Mosque" alt="مسجد نصیرالملک">
+        <figcaption class="cap">مسجد نصیرالملک — شیراز</figcaption>
+      </figure>
+      <figure class="item">
+        <img src="https://placehold.co/800x540?text=Tomb+of+Cyrus" alt="مقبره کوروش">
+        <figcaption class="cap">مقبره کوروش — پاسارگاد</figcaption>
+      </figure>
+      <figure class="item">
+        <img src="https://placehold.co/800x540?text=Takht-e+Soleyman" alt="تخت سلیمان">
+        <figcaption class="cap">تخت سلیمان — تکاب</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ===== Blog ===== -->
+  <section id="blog" class="card">
+    <h2>بلاگ</h2>
+    <div class="grid g-2" id="blogList">
+      <article class="post">
+        <h3>شروع مسیر برنامه‌نویسی من</h3>
+        <div class="meta">۱۴۰۴/۰۶/۰۴ • ۲ دقیقه</div>
+        <p>اینجا درباره مسیرم می‌نویسم؛ از HTML/CSS ساده تا ساخت اپ‌های واقعی…</p>
+      </article>
+      <article class="post">
+        <h3>چرا مشکی؟ 🎩</h3>
+        <div class="meta">۱۴۰۴/۰۶/۰۳ • ۱ دقیقه</div>
+        <p>استایل کلاسیک + رنگ مشکی = ترکیب موردعلاقه‌م. مینیمال، تمیز، همیشه شیک.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===== Shop ===== -->
+  <section id="shop" class="card">
+    <h2>فروشگاه</h2>
+    <div class="grid">
+      <div class="product">
+        <div>ساختن سایت‌های ساده تا کمی پیشرفته</div>
+        <div class="price">۱۰۰,۰۰۰ تومان</div>
+      </div>
+      <div class="product">
+        <div>تبلیغات داخل سایت</div>
+        <div class="price">قیمت توافقی</div>
+      </div>
+      <div class="product">
+        <div>ساخت برنامه اندروید یا iOS (بسته به سختی)</div>
+        <div class="price">قیمت توافقی</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Comments + Bot ===== -->
+  <section id="comments" class="card">
+    <h2>نظرات کاربران</h2>
+    <div class="grid">
+      <textarea id="cText" placeholder="نظر خودتو بنویس..."></textarea>
+      <div class="g-2 grid">
+        <input id="cName" class="inp" placeholder="نام (اختیاری)" />
+        <button class="btn btn-primary" onclick="addComment()">ارسال نظر</button>
+      </div>
+    </div>
+    <div class="c-list" id="cList"></div>
+  </section>
+
+  <!-- ===== Rules ===== -->
+  <section id="rules" class="card">
+    <h2>قوانین سایت</h2>
+    <ul class="rules">
+      <li>احترام به همه کاربران الزامی است.</li>
+      <li>ارسال محتوای توهین‌آمیز یا خلاف قوانین ممنوع است.</li>
+      <li>رعایت حقوق کپی‌رایت الزامی است.</li>
+      <li>از اسپم خودداری کنید؛ تعامل مفید امتیاز می‌دهد.</li>
+    </ul>
+  </section>
+
+  <!-- ===== Contact ===== -->
+  <section id="contact" class="card">
+    <h2>ارتباط با من</h2>
+    <div class="actions">
+      <a class="action" href="https://t.me/AM1R_DRAGON" target="_blank" rel="noopener">تلگرام @AM1R_DRAGON</a>
+      <a class="action" href="https://rubika.ir/AM1R_DRAGON" target="_blank" rel="noopener">روبیکا AM1R_DRAGON</a>
+    </div>
+  </section>
+
+  <!-- ===== Rate (5) ===== -->
+  <section id="rate" class="card">
+    <h2>به سایت چند میدی؟</h2>
+    <div class="stars" id="stars">
+      <span data-s="1">★</span><span data-s="2">★</span><span data-s="3">★</span><span data-s="4">★</span><span data-s="5">★</span>
+    </div>
+    <div class="hint" id="rateNote"></div>
+  </section>
+
+  <!-- ===== Leaderboard ===== -->
+  <section id="board" class="card">
+    <h2>کاربران فعال</h2>
+    <div class="board" id="boardList"></div>
+    <div class="hint">* این رتبه‌بندی محلی و نمایشی است؛ با تعامل (نظر/لایک/امتیاز) امتیاز شما بالا می‌رود.</div>
+  </section>
+
+  <!-- ===== Secret Stats (Hidden) ===== -->
+  <section id="stats" class="card secret">
+    <h2>آمار سایت (مخفی)</h2>
+    <div class="grid g-2">
+      <div class="card">
+        <h3>بازدیدها</h3>
+        <div id="statViews">—</div>
+      </div>
+      <div class="card">
+        <h3>کاربران ثبت‌نامی</h3>
+        <div id="statUsers">—</div>
+      </div>
+      <div class="card">
+        <h3>تعداد نظرات</h3>
+        <div id="statComments">—</div>
+      </div>
+      <div class="card">
+        <h3>کل لایک‌ها</h3>
+        <div id="statLikes">—</div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>© 2025 AM1R-DRAGON — تمامی حقوق محفوظ است</footer>
+
+<!-- ===== Tiny Lock to open secret panel ===== -->
+<div class="lock-mini" onclick="openSecret()">🔒</div>
+
+<!-- ===== Auth Modal (Advanced) ===== -->
+<div class="modal" id="authModal" aria-hidden="true">
+  <div class="panel">
+    <h3 style="margin-top:0">ورود / ثبت‌نام</h3>
+    <div class="grid">
+      <input id="uName" class="inp" placeholder="نام کاربری (نمایش در سایت)" />
+      <input id="uEmail" class="inp" type="email" placeholder="ایمیل (اختیاری)" />
+      <input id="uPhone" class="inp" type="tel" placeholder="شماره تماس (اختیاری)" />
+      <input id="uPass" class="inp" type="password" placeholder="رمز عبور (حداقل ۸ کاراکتر)" />
+      <input id="uPass2" class="inp" type="password" placeholder="تکرار رمز عبور" />
+      <div id="captchaWrap" class="g-2 grid">
+        <input id="captchaQ" class="inp" disabled />
+        <input id="captchaA" class="inp" placeholder="پاسخ کپچا" />
+      </div>
+      <div class="g-2 grid">
+        <button class="btn btn-primary" onclick="doLogin()">ثبت‌نام / ورود</button>
+        <button class="btn btn-ghost" onclick="closeAuth()">انصراف</button>
+      </div>
+      <div class="hint">* اطلاعات روی مرورگر شما (LocalStorage) ذخیره می‌شود و سمت سرور ارسال نمی‌شود.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== User Panel Modal ===== -->
+<div class="modal" id="userModal" aria-hidden="true">
+  <div class="panel">
+    <h3 style="margin-top:0">پنل کاربری من</h3>
+    <div class="grid">
+      <input id="pName" class="inp" placeholder="نام نمایشی" />
+      <textarea id="pBio" class="inp" placeholder="بیوگرافی کوتاه"></textarea>
+      <input id="pPhone" class="inp" placeholder="شماره تماس (اختیاری)" />
+      <div class="g-2 grid">
+        <input id="pPassOld" class="inp" type="password" placeholder="رمز فعلی" />
+        <input id="pPassNew" class="inp" type="password" placeholder="رمز جدید (حداقل ۸ کاراکتر)" />
+      </div>
+      <div class="g-2 grid">
+        <button class="btn btn-primary" onclick="saveProfile()">ذخیره تغییرات</button>
+        <button class="btn btn-ghost" onclick="closeUserPanel()">بستن</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ====== UTIL ====== */
+const $ = s => document.querySelector(s);
+const $all = s => Array.from(document.querySelectorAll(s));
+function uuid(){ return Date.now().toString(36)+Math.random().toString(36).slice(2); }
+function escapeHtml(s){ return String(s).replace(/[&<>"']/g,m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[m])); }
+
+/* ====== THEME ====== */
+const THEME_KEY='am_theme';
+function applyTheme(t){ document.documentElement.setAttribute('data-theme', t); localStorage.setItem(THEME_KEY, t); $('#themeBtn').textContent = (t==='dark'?'🌙':'☀️'); }
+function toggleTheme(){ const t = document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark'; applyTheme(t); }
+$('#themeBtn').addEventListener('click', toggleTheme);
+
+/* ====== MENU ====== */
+function toggleMenu(){
+  const m = $('#menu');
+  m.style.display = (m.style.display==='flex' ? 'none' : 'flex');
+  if(m.style.display==='flex'){ m.style.flexDirection='column'; }
+}
+document.addEventListener('click',(e)=>{
+  const m = $('#menu');
+  const toggle = e.target.closest('.menu-toggle');
+  if(!toggle && m.style.display==='flex' && !e.target.closest('#menu')) m.style.display='none';
+});
+
+/* ====== COPY PROTECTION (except #about) ====== */
+document.addEventListener('copy', (e)=>{ 
+  if(!window.getSelection().anchorNode) return;
+  const sel = window.getSelection().anchorNode.parentElement;
+  if(sel && sel.closest && sel.closest('#about')) return; // اجازه کپی در معرفی
+  e.preventDefault(); 
+});
+document.addEventListener('contextmenu', (e)=>{
+  const el = e.target.closest('#about');
+  if(el) return; // اجازه راست‌کلیک در معرفی
+  e.preventDefault();
+});
+
+/* ====== AUTH / USERS ====== */
+const AUTH_KEY='am_user';
+const USERS_KEY='am_users';
+const B_KEY='am_board';
+const whoami = $('#whoami'), btnLogin=$('#btnLogin'), btnLogout=$('#btnLogout'), userDisplay=$('#userDisplay');
+
+let captchaAns = 0;
+function genCaptcha(){
+  const a = Math.floor(2+Math.random()*8), b = Math.floor(2+Math.random()*8);
+  captchaAns = a+b; $('#captchaQ').value = `حاصل ${a} + ${b} ؟`;
+  $('#captchaA').value = '';
+}
+function openAuth(){ $('#authModal').style.display='grid'; genCaptcha(); }
+function closeAuth(){ $('#authModal').style.display='none'; }
+
+function loadUsers(){ return JSON.parse(localStorage.getItem(USERS_KEY)||'[]'); }
+function saveUsers(u){ localStorage.setItem(USERS_KEY, JSON.stringify(u)); }
+
+function doLogin(){
+  const name = $('#uName').value.trim();
+  const email = $('#uEmail').value.trim();
+  const phone = $('#uPhone').value.trim();
+  const pass = $('#uPass').value.trim();
+  const pass2 = $('#uPass2').value.trim();
+  const cap = $('#captchaA').value.trim();
+  if(!name) return alert('نام کاربری لازم است');
+  if(pass.length<8) return alert('رمز عبور باید حداقل ۸ کاراکتر باشد');
+  if(pass!==pass2) return alert('تکرار رمز مطابقت ندارد');
+  if(String(captchaAns)!==cap) return alert('پاسخ کپچا اشتباه است');
+
+  let users = loadUsers();
+  let existing = users.find(u=>u.name===name);
+  if(existing){
+    if(existing.pass!==pass) return alert('رمز عبور نادرست است');
+    localStorage.setItem(AUTH_KEY, JSON.stringify(existing));
+  }else{
+    const u = {id:uuid(), name, email, phone, pass, score:0, bio:'', avatar:''};
+    users.push(u); saveUsers(users);
+    localStorage.setItem(AUTH_KEY, JSON.stringify(u));
+  }
+  closeAuth(); renderAuth(); bumpScore(5);
+}
+
+function logout(){ localStorage.removeItem(AUTH_KEY); renderAuth(); }
+
+function currentUser(){
+  const raw = localStorage.getItem(AUTH_KEY);
+  return raw? JSON.parse(raw) : null;
+}
+function persistUser(u){
+  let users = loadUsers();
+  const i = users.findIndex(x=>x.id===u.id);
+  if(i>-1){ users[i]=u; saveUsers(users); localStorage.setItem(AUTH_KEY, JSON.stringify(u)); }
+}
+
+function renderAuth(){
+  const u = currentUser();
+  if(u){
+    whoami.textContent = "سلام، " + u.name;
+    btnLogin.style.display='inline-flex';
+    btnLogout.style.display='inline-flex';
+    btnLogin.style.display='none';
+    userDisplay.textContent = "کاربر: " + u.name;
+    if(u.avatar){ $('#profilePic').src = u.avatar; }
+  }else{
+    whoami.textContent = "";
+    btnLogin.style.display='inline-flex';
+    btnLogout.style.display='none';
+    userDisplay.textContent = "کاربر مهمان";
+  }
+}
+
+/* ====== USER PANEL ====== */
+function openUserPanel(){
+  const u = currentUser();
+  if(!u){ openAuth(); return; }
+  $('#pName').value = u.name||'';
+  $('#pBio').value = u.bio||'';
+  $('#pPhone').value = u.phone||'';
+  $('#userModal').style.display='grid';
+}
+function closeUserPanel(){ $('#userModal').style.display='none'; }
+function saveProfile(){
+  const u = currentUser(); if(!u) return;
+  const name = $('#pName').value.trim(); if(!name) return alert('نام نمی‌تواند خالی باشد');
+  const bio = $('#pBio').value.trim();
+  const phone = $('#pPhone').value.trim();
+  const oldp = $('#pPassOld').value.trim();
+  const newp = $('#pPassNew').value.trim();
+  if(newp){
+    if(oldp!==u.pass) return alert('رمز فعلی درست نیست');
+    if(newp.length<8) return alert('رمز جدید حداقل ۸ کاراکتر');
+    u.pass=newp;
+  }
+  u.name=name; u.bio=bio; u.phone=phone;
+  persistUser(u);
+  renderAuth();
+  closeUserPanel();
+  alert('ذخیره شد');
+}
+
+/* Avatar upload to DataURL */
+$('#fileAvatar').addEventListener('change', async (e)=>{
+  const file = e.target.files[0]; if(!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    const dataURL = reader.result;
+    $('#profilePic').src = dataURL;
+    const u = currentUser(); if(u){ u.avatar=dataURL; persistUser(u); }
+  };
+  reader.readAsDataURL(file);
+});
+
+/* ====== COMMENTS with BOT ====== */
+const C_KEY='am_comments';
+const cList = $('#cList');
+function loadComments(){ return JSON.parse(localStorage.getItem(C_KEY)||'[]'); }
+function saveComments(d){ localStorage.setItem(C_KEY, JSON.stringify(d)); }
+function addComment(){
+  const text = $('#cText').value.trim();
+  const name = ($('#cName').value.trim() || (currentUser()?.name || 'کاربر'));
+  if(!text){ alert('متن نظر خالیه'); return; }
+  const items = loadComments();
+  const cid = Date.now();
+  items.unshift({id:cid, name, text, like:0, replies:[]});
+  saveComments(items);
+  $('#cText').value=''; $('#cName').value='';
+  renderComments(); bumpScore(2);
+  // BOT پاسخ هوشمند ساده
+  setTimeout(()=>autoReply(cid, text), 500);
+}
+function autoReply(id, text){
+  const items = loadComments();
+  const it = items.find(x=>x.id===id); if(!it) return;
+  const t = text.toLowerCase();
+  let msg = 'ممنون از نظرت 🌹';
+  if(t.includes('سلام')) msg='سلام! خوش اومدی 👋';
+  if(t.includes('خسته نباشی')||t.includes('دمت گرم')) msg='مرسی از انرژی خوبت ❤️';
+  if(t.includes('کمک')||t.includes('راهنما')) msg='در خدمتتم! بگو دقیقاً کجا کمک می‌خوای؟';
+  it.replies.push({id:Date.now(), text:msg, bot:true});
+  saveComments(items); renderComments();
+}
+function likeComment(id){
+  const items = loadComments(); const it = items.find(x=>x.id===id);
+  if(it){ it.like++; saveComments(items); renderComments(); bumpScore(1); }
+}
+function replyComment(id){
+  const msg = prompt('پاسخ شما:'); if(!msg) return;
+  const items = loadComments(); const it = items.find(x=>x.id===id);
+  if(it){ it.replies.push({id:Date.now(), text:msg}); saveComments(items); renderComments(); bumpScore(1); }
+}
+function renderComments(){
+  const items = loadComments();
+  if(items.length===0){ cList.innerHTML = '<div class="hint">هنوز نظری ثبت نشده…</div>'; return; }
+  cList.innerHTML = items.map(it=>`
+    <div class="comment">
+      <div class="c-meta">
+        <b>${escapeHtml(it.name)}</b>
+        <div class="c-actions">
+          <button class="badge" onclick="likeComment(${it.id})">❤️ ${it.like}</button>
+          <button class="badge" onclick="replyComment(${it.id})">💬 پاسخ</button>
+        </div>
+      </div>
+      <div style="margin-top:8px">${escapeHtml(it.text)}</div>
+      ${it.replies?.length? `<div style="margin-top:10px;display:grid;gap:8px">
+        ${it.replies.map(r=>`<div class="badge">${r.bot?'🤖':''} ↪ ${escapeHtml(r.text)}</div>`).join('')}
+      </div>`:''}
+    </div>
+  `).join('');
+}
+
+/* ====== RATE (5) ====== */
+const R_KEY='am_rate';
+const starsEl = $('#stars'); const rateNote = $('#rateNote');
+function setRate(v){ localStorage.setItem(R_KEY, String(v)); drawStars(v); rateNote.textContent = `امتیاز شما ثبت شد: ${v}/5`; bumpScore(1); }
+function drawStars(v){ [...starsEl.children].forEach(s=> s.classList.toggle('on', Number(s.dataset.s)<=v)); }
+starsEl.addEventListener('click',(e)=>{ const n = Number(e.target.dataset.s||0); if(n) setRate(n); });
+
+/* ====== LEADERBOARD ====== */
+function bumpScore(n){
+  const u = currentUser(); if(!u) return;
+  u.score = (u.score||0) + n; persistUser(u);
+  let list = JSON.parse(localStorage.getItem(B_KEY)||'[]');
+  const me = list.find(x=>x.id===u.id);
+  if(me){ me.score=u.score; me.name=u.name; } else { list.push({id:u.id, name:u.name, score:u.score}); }
+  localStorage.setItem(B_KEY, JSON.stringify(list));
+  renderBoard();
+}
+function renderBoard(){
+  const list = JSON.parse(localStorage.getItem(B_KEY)||'[]').sort((a,b)=>b.score-a.score).slice(0,10);
+  const el = $('#boardList');
+  if(list.length===0){ el.innerHTML = '<div class="hint">فعلاً کاربر فعالی ثبت نشده.</div>'; return; }
+  el.innerHTML = list.map((u,i)=>`<div class="row"><div>#${i+1} — ${escapeHtml(u.name)}</div><div>${u.score} امتیاز</div></div>`).join('');
+}
+
+/* ====== SECRET STATS (password: anime100max) ====== */
+const VIEWS_KEY='am_views';
+function openSecret(){
+  const pwd = prompt('رمز عبور را وارد کنید:');
+  if(pwd==='anime100max'){
+    $('#stats').style.display='block';
+    updateStats();
+    window.location.hash = '#stats';
+  }else if(pwd){ alert('رمز اشتباهه!'); }
+}
+function updateStats(){
+  $('#statViews').textContent = Number(localStorage.getItem(VIEWS_KEY)||0);
+  $('#statUsers').textContent = (loadUsers()||[]).length;
+  const cs = loadComments();
+  $('#statComments').textContent = cs.length;
+  $('#statLikes').textContent = cs.reduce((a,c)=>a+(c.like||0),0);
+}
+
+/* ====== INIT ====== */
+function init(){
+  // view counter
+  const v = Number(localStorage.getItem(VIEWS_KEY)||0)+1; localStorage.setItem(VIEWS_KEY, String(v));
+  // theme
+  const t = localStorage.getItem(THEME_KEY)||'dark'; applyTheme(t);
+  // auth & ui pieces
+  renderAuth(); renderComments(); renderBoard();
+  const savedRate = Number(localStorage.getItem(R_KEY)||0); if(savedRate){ drawStars(savedRate); rateNote.textContent=`امتیاز شما: ${savedRate}/5`; }
+
+  // prevent menu auto-close bug on first load
+  $('#menu').style.display='none';
+}
+document.addEventListener('click', (e)=>{ if(e.target.id==='authModal') closeAuth(); if(e.target.id==='userModal') closeUserPanel(); });
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+        </html>
